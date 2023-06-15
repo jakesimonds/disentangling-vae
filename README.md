@@ -1,3 +1,27 @@
+# Disentagled VAE -- Jake's Colab .ipynb Implementation
+
+This is a fork of YannDubs/disentangling-vae--great repo, 10/10 would recommend. This fork really doesn't add much, I just wanted to **1)** 
+document my Colab implementation that as of 6/15/23 works reasonably well (though I did pay for $10/month colab) and **2)** 
+document my own results from training the model on the CelebA dataset, and spending some time with the paper Disentangling B-VAE (https://arxiv.org/abs/1804.03599).
+
+## Colab Quickstart
+
+### Step 1:
+
+Either go to this link (https://colab.research.google.com/drive/10c68VNn7E673TKLLS-G2FS6WBrBnCVkD?usp=sharing) or download and then open in Google Colab the file "Disentangling_Colab.ipynb" (might need to make a copy to be able to make changes).
+
+### Step 2: 
+
+Follow instructions in notebook! 
+
+Basically I have it set up so you can just name a folder where the results will save, set your parameters (following instructions from original repo), and then run it (I've been setting it up to run overnight, depending on your dataset it can take a stupid long time (and I paid for $10 Colab, might work without?)).
+
+## My "Findings"
+
+
+
+
+
 # Disentangled VAE [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/YannDubs/disentangling-vae/blob/master/LICENSE) [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
 This repository contains code (training / metrics / plotting) to investigate disentangling in VAE as well as compare 5 different losses ([summary of the differences](#losses-explanation)) using a [single architecture](#single-model-comparison):
