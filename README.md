@@ -16,7 +16,43 @@ Follow instructions in notebook!
 
 Basically I have it set up so you can just name a folder where the results will save, set your parameters (following instructions from original repo), and then run it (I've been setting it up to run overnight, depending on your dataset it can take a stupid long time (and I paid for $10 Colab, might work without?)).
 
-## My "Findings"
+## My Findings
+
+###  B - VAE successfully factorized the CelebA dataset into meaningful latent varariables
+
+ 
+
+Borrowing some hyperparameters from the original disentangling-vae github my first interesting result was that Just as the paper promised, B-VAE could factorize the CelebA dataset into interesting latent dimensions.
+
+
+```commandline
+!python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaB --lr 0.0005 -b 256 -e 150
+```
+<img src="Colab_Implementation_Files/figs/training_first_run.png" width=1500>
+
+We can 
+
+Noticing that the number of latent dimensions was a tunable hyper-parameter, I repeated the above experimental conditions with the number of latent variables, z, cut from 10 (default) to 5. 
+
+
+```commandline
+!python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaB --lr 0.0005 -b 256 -z 5 -e 150
+```
+
+<img src="Colab_Implementation_Files/figs/training_second.png" width=1500>
+
+
+The CelebA 
+
+###  Reconstruction: Not great, but insights/intuition in how it executed
+
+
+
+
+## Implementation Details 
+
+### It is hard to know how long to train for
+
 
 
 
