@@ -64,35 +64,6 @@ The careful reader may have noticed that the third experiment I just showed had 
 
 As I hopefully mentioned, this is my first time doing something like this, and I really didn't know where to begin for setting hyperparameters. The above graph shows average loss over total training time, and after seeing it laid out like this I started doing shorter trainings since my ambition here is to build intuition and explore rather than robustly prove anything. 
 
-### Recreating Figure 2 from "Understanding Disentanglement in B-VAE" with Celeba dataset
-
-<img src="Colab_Implementation_Files/figs/paper_fig2.png" width=500>
-
-Figure 2 from "Understanding Disentangling in B-VAE" illustrates how a higher beta value leads to a less entangled latent space. They mention in the paper that when the beta value is high, a potential drawback is loss of reconstruction fidelity, but we don't see that in figure 2 because two latent information channels are sufficient to reproduce the Gaussian blobs. 
-
-
-<div style="display: flex;">
-    <img src="Colab_Implementation_Files/figs/reconstruct_b1.png" width="250">
-    <img src="Colab_Implementation_Files/figs/training_b1.tiff" width="250">
-</div>
-
-
-Beta = 1
-
-```commandline
-!python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaH --betaH-B 1 --lr 0.0005 -b 256 -e 60
-```
-<div style="display: flex;">
-<img src="Colab_Implementation_Files/figs/reconstruct_150.png" width=250>
-<img src="Colab_Implementation_Files/figs/training_150.png" width=250>
-</div>
-Beta = 150
-```commandline
-!python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaH --betaH-B 150 --lr 0.0005 -b 256 -e 60
-```
-
-
-
 
 ###  Reconstruction: Not great, but insights/intuition in how it executed
 
@@ -106,10 +77,42 @@ The reconstruction does an okay job on some of those elements, while the faces t
 
 Also of note: 
 - it seems to reconstruct more poorly on non-white faces, likely an artifact of the dataset population
-- Things like hats or glasses are often missing. It would be very cool to tease out latent dimensions for items like those, and I think theoretically it's possible, but it might be hard with a dataset like celebA where there's just a lot of unpredictable variables. 
+- Things like hats or glasses are often missing. It would be very cool to tease out latent dimensions for items like those, and I think theoretically it's possible, but it might be hard with a dataset like celebA where there's just a lot of unpredictable variables.
 
 
-### Recreated 
+### Recreating Figure 2 from "Understanding Disentanglement in B-VAE" with Celeba dataset
+
+<img src="Colab_Implementation_Files/figs/paper_fig2.png" width=500>
+
+Figure 2 from "Understanding Disentangling in B-VAE" illustrates how a higher beta value leads to a less entangled latent space. They mention in the paper that when the beta value is high, a potential drawback is loss of reconstruction fidelity, but we don't see that in figure 2 because two latent information channels are sufficient to reproduce the Gaussian blobs.
+
+<div style="display: flex;">
+    <img src="Colab_Implementation_Files/figs/reconstruct_b1.png" width="400">
+    <img src="Colab_Implementation_Files/figs/training_b1.png" width="400">
+</div>
+
+Beta = 1
+
+```commandline
+!python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaH --betaH-B 1 --lr 0.0005 -b 256 -e 60
+```
+
+With Beta=1 not heavily penalizing the regularization term we see that all our latent channels are in use, but they are not factorized (compare to experiment 1 above).
+
+
+<div style="display: flex;">
+<img src="Colab_Implementation_Files/figs/reconstruct_150.png" width=400>
+<img src="Colab_Implementation_Files/figs/training_150.png" width=400>
+</div>
+Beta = 150
+
+```commandline
+!python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaH --betaH-B 150 --lr 0.0005 -b 256 -e 60
+```
+
+With Beta=150 heavily penalizing the regularization term, only three channels are in use, and they are factorized. Reconstruction fidelity, however, has taken a pretty significant hit.
+
+
 
 
 # Disentangled VAE [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/YannDubs/disentangling-vae/blob/master/LICENSE) [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
