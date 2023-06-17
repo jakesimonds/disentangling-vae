@@ -4,7 +4,7 @@ This is a fork of YannDubs/disentangling-vae--great repo, 10/10 would recommend.
 document my Colab implementation that as of 6/15/23 works reasonably well (though I did pay for $10/month colab) and **2)** 
 document my own results from training the model on the CelebA dataset, and spending some time with the paper Disentangling B-VAE (https://arxiv.org/abs/1804.03599).
 
-## Colab Quickstart
+# Colab Quickstart
 
 ### Step 1:
 
@@ -16,36 +16,36 @@ Follow instructions in notebook!
 
 Basically I have it set up so you can just name a folder where the results will save, set your parameters (following instructions from original repo), and then run it (I've been setting it up to run overnight, depending on your dataset it can take a stupid long time (and I paid for $10 Colab, might work without?)).
 
-## My Findings
+# My Findings
 
-###  B - VAE successfully factorized the CelebA dataset into meaningful latent varariables
+##  B - VAE successfully factorized the CelebA dataset into meaningful latent varariables
 
 Borrowing some hyperparameters from the original disentangling-vae github my first interesting result was that Just as the paper promised, B-VAE could factorize the CelebA dataset into interesting latent dimensions.
 
-#### Manually adjusting number of latent variables, z
+### Manually adjusting number of latent variables, z
 
 ```commandline
 !python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaB --lr 0.0005 -b 256 -e 150
 ```
-<img src="Colab_Implementation_Files/figs/training_first_run.png" width=1500>
+<img src="Colab_Implementation_Files/figs/training_first_run.png" width=750>
 
 Though some of the latent traversals (looking across the ten rows right-to-left) are not immediately intelligible, some are! 
 
 Also of note I think is that we can see relatively smooth transitions along the latent traversals.  
 
-#### Number of latent channels reduced 50% (from 10 (default) to 5)
+### Number of latent channels reduced 50% (from 10 (default) to 5)
 
 ```commandline
 !python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaB --lr 0.0005 -b 256 -z 5 -e 150
 ```
 
-<img src="Colab_Implementation_Files/figs/training_second.png" width=1500>
+<img src="Colab_Implementation_Files/figs/training_second.png" width=750>
 
-With the number of latent channels cut in half, we no longer see smooth transition, but rather each channel is being asked to encode different kinds of information. 
+With the number of latent channels cut in half, we no longer see smooth transition. Not only is each channel encoding multiple elements that a human would call seperate generative factors, but these generative factors are showing up in multiple channels! We can see "blue background" being encoded in four of the five channels, for example.  
 
-#### 30 latent channels
+### 30 latent channels
 
-<img src="Colab_Implementation_Files/figs/training_30z.png" width=1500>
+<img src="Colab_Implementation_Files/figs/training_30z.png" width=300>
 
 ```commandline
 !python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaB --betaB-finC 100 --lr 0.0005 -b 256 -z 30 -e 30
@@ -56,18 +56,18 @@ Naively one might think that more open channels would mean more information coul
 The equation determining encoding has a reconstruction term and a penalty term. Here I believe we are seeing the penalty term "put its foot down" and not allowing channels to encode information that would result in an increase in the KL divergence to a magnitiude that offsets the benefit to the reconstruction term.  
 
 
-#### Did you just go from 150 Epochs to 30? 
+### Did you just go from 150 Epochs to 30? 
 
 The careful reader may have noticed that the third experiment I just showed had 20% the training time of the previous two. 
 
-<img src="Colab_Implementation_Files/figs/June15_run_loss.png" width=500>
+<img src="Colab_Implementation_Files/figs/June15_run_loss.png" width=750>
 
 As I hopefully mentioned, this is my first time doing something like this, and I really didn't know where to begin for setting hyperparameters. The above graph shows average loss over total training time, and after seeing it laid out like this I started doing shorter trainings since my ambition here is to build intuition and explore rather than robustly prove anything. 
 
 
-###  Reconstruction: Not great, but insights/intuition in how it executed
+##  Reconstruction: Not great, but insights/intuition in how it executed
 
-<img src="Colab_Implementation_Files/figs/reconstruct.png" width=1500>
+<img src="Colab_Implementation_Files/figs/reconstruct.png" width=750>
 
 This is the reconstruction from the experiment 1 above (with 10 latent channels). Top three rows are the input images, bottom three rows are the corresponding reconstructions. 
 
@@ -80,9 +80,9 @@ Also of note:
 - Things like hats or glasses are often missing. It would be very cool to tease out latent dimensions for items like those, and I think theoretically it's possible, but it might be hard with a dataset like celebA where there's just a lot of unpredictable variables.
 
 
-### Recreating Figure 2 from "Understanding Disentanglement in B-VAE" with Celeba dataset
+## Recreating Figure 2 from "Understanding Disentanglement in B-VAE" with Celeba dataset
 
-<img src="Colab_Implementation_Files/figs/paper_fig2.png" width=500>
+<img src="Colab_Implementation_Files/figs/paper_fig2.png" width=750>
 
 Figure 2 from "Understanding Disentangling in B-VAE" illustrates how a higher beta value leads to a less entangled latent space. They mention in the paper that when the beta value is high, a potential drawback is loss of reconstruction fidelity, but we don't see that in figure 2 because two latent information channels are sufficient to reproduce the Gaussian blobs.
 
