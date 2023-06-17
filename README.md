@@ -73,7 +73,7 @@ Figure 2 from "Understanding Disentangling in B-VAE" illustrates how a higher be
 
 <div style="display: flex;">
     <img src="Colab_Implementation_Files/figs/reconstruct_b1.png" width="250">
-    <img src="Colab_Implementation_Files/figs/training_b1.png" width="250">
+    <img src="Colab_Implementation_Files/figs/training_b1.tiff" width="250">
 </div>
 
 
@@ -82,11 +82,10 @@ Beta = 1
 ```commandline
 !python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaH --betaH-B 1 --lr 0.0005 -b 256 -e 60
 ```
-
+<div style="display: flex;">
 <img src="Colab_Implementation_Files/figs/reconstruct_150.png" width=250>
-
 <img src="Colab_Implementation_Files/figs/training_150.png" width=250>
-
+</div>
 Beta = 150
 ```commandline
 !python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaH --betaH-B 150 --lr 0.0005 -b 256 -e 60
