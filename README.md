@@ -27,7 +27,7 @@ Borrowing some hyperparameters from the original disentangling-vae github my fir
 ```commandline
 !python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaB --lr 0.0005 -b 256 -e 150
 ```
-<img src="Colab_Implementation_Files/figs/training_first_run.png" width=750>
+<img src="Colab_Implementation_Files/figs/training_first_run.png" width=550>
 
 Though some of the latent traversals (looking across the ten rows right-to-left) are not immediately intelligible, some are! 
 
@@ -39,7 +39,7 @@ Also of note I think is that we can see relatively smooth transitions along the 
 !python /content/disentangling-vae/main.py {FOLDER_NAME} -d celeba -l betaB --lr 0.0005 -b 256 -z 5 -e 150
 ```
 
-<img src="Colab_Implementation_Files/figs/training_second.png" width=750>
+<img src="Colab_Implementation_Files/figs/training_second.png" width=550>
 
 With the number of latent channels cut in half, we no longer see smooth transition. Not only is each channel encoding multiple elements that a human would call seperate generative factors, but these generative factors are showing up in multiple channels! We can see "blue background" being encoded in four of the five channels, for example.  
 
@@ -60,14 +60,14 @@ The equation determining encoding has a reconstruction term and a penalty term. 
 
 The careful reader may have noticed that the third experiment I just showed had 20% the training time of the previous two. 
 
-<img src="Colab_Implementation_Files/figs/June15_run_loss.png" width=750>
+<img src="Colab_Implementation_Files/figs/June15_run_loss.png" width=350>
 
 As I hopefully mentioned, this is my first time doing something like this, and I really didn't know where to begin for setting hyperparameters. The above graph shows average loss over total training time, and after seeing it laid out like this I started doing shorter trainings since my ambition here is to build intuition and explore rather than robustly prove anything. 
 
 
 ##  Reconstruction: Not great, but insights/intuition in how it executed
 
-<img src="Colab_Implementation_Files/figs/reconstruct.png" width=750>
+<img src="Colab_Implementation_Files/figs/reconstruct.png" width=550>
 
 This is the reconstruction from the experiment 1 above (with 10 latent channels). Top three rows are the input images, bottom three rows are the corresponding reconstructions. 
 
@@ -82,7 +82,7 @@ Also of note:
 
 ## Recreating Figure 2 from "Understanding Disentanglement in B-VAE" with Celeba dataset
 
-<img src="Colab_Implementation_Files/figs/paper_fig2.png" width=750>
+<img src="Colab_Implementation_Files/figs/paper_fig2.png" width=550>
 
 Figure 2 from "Understanding Disentangling in B-VAE" illustrates how a higher beta value leads to a less entangled latent space. They mention in the paper that when the beta value is high, a potential drawback is loss of reconstruction fidelity, but we don't see that in figure 2 because two latent information channels are sufficient to reproduce the Gaussian blobs.
 

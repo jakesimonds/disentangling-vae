@@ -22,7 +22,9 @@ DATASETS_DICT = {"mnist": "MNIST",
                  "fashion": "FashionMNIST",
                  "dsprites": "DSprites",
                  "celeba": "CelebA",
-                 "chairs": "Chairs"}
+                 "chairs": "Chairs",
+                 "olivetti": "OlivettiFaces"
+                 }
 DATASETS = list(DATASETS_DICT.keys())
 
 
@@ -422,3 +424,64 @@ def preprocess(root, size=(64, 64), img_format='JPEG', center_crop=None):
             img.crop((left, top, right, bottom))
 
         img.save(img_path, img_format)
+
+
+
+from sklearn.datasets import fetch_olivetti_faces
+
+class OlivettiFaces(DisentangledDataset):
+    """Olivetti Faces Dataset.
+
+    The Olivetti Faces dataset is a collection of grayscale images of faces. The images were
+    taken between April 1992 and April 1994 at AT&T Laboratories Cambridge. There are ten different
+    images of each of 40 distinct subjects. The images were taken at different times,
+    varying the lighting, facial expressions (open / closed eyes, smiling / not smiling)
+    and facial details (glasses / no glasses). All the images were taken against a dark homogeneous background
+    with the subjects in an upright, frontal position (with tolerance for some side movement).
+
+    Notes
+    -----
+    - Link : https://scikit-learn.org/0.24/datasets/toy_dataset.html#olivetti-faces-dataset
+
+    Parameters
+    ----------
+    root : string
+        Root directory of dataset.
+
+    """
+    img_size = (1, 64, 64)
+    background_color = COLOUR_WHITE
+
+    def __init__(self, root=os.path.join(DIR, '../data/olivetti_faces'), **kwargs):
+        super().__init__(root, [transforms.ToTensor()], **kwargs)
+
+        self.data = fetch_olivetti_faces(data_home=self.root, download_if_missing=True)
+        self.imgs = self.data.images
+
+    def download(self):
+        """Download the dataset."""
+        pass  # Downloading is handled by fetch_olivetti_faces
+
+    def __getitem__(self, idx):
+        """Get the image of `idx`
+
+        Return
+        ------
+        sample : torch.Tensor
+            Tensor in [0.,1.] of shape `img_size`.
+
+        target : int
+            The label of the sample (the identity of the face).
+        """
+        # Images are already in range [0, 1] and of shape (64, 64),
+        # but we need to add an extra dimension for the grayscale channel
+        sample = self.imgs[idx]
+        sample = np.expand_dims(sample, axis=0)
+
+        # Transform to tensor
+        sample = self.transforms(sample)
+
+        # Get the target class (the identity of the face)
+        target = self.data.target[idx]
+
+        return sample, target
