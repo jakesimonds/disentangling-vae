@@ -111,7 +111,15 @@ The careful reader may have noticed that in the experiments I show the # of epoc
 
 This is my first time doing something like this, and I really didn't know where to begin for setting hyperparameters. The above graph shows average loss over total training time for a run with 150 epochs, and after seeing it laid out like this I started doing shorter trainings since my ambition here is to build intuition and explore rather than robustly prove anything. Since 150 epoch runs were taking in the ballpark of 6 hours to complete, I wish I had made this graph earlier! 
 
+## Next Steps
 
+It might be interesting to train with a slightly "cleaner" dataset of faces. The Olivetti Faces dataset was something I considered, and I think would be perfect in terms of having a lower resolution (so training could be quicker) and more consistent in extraneous factors, so maybe a model trained on a dataset like that would have more interesting factors to tease out since it wouldn't have to encode as much info about variation in background, lighting, pose, etc. Unfortunately Olivetti is a very small dataset, with only 400 total images. But I might still try it, just ran out of time for now. 
+
+## Why Colab? 
+
+I had access to the Discovery HPC cluster for this project, but implemented in Colab. The main reason for this is that I was more familiar with Colab, and very quickly was able to get a "working" clone of the repo, and then when I tried to reproduce that clone on the Discovery cluster I ran into some dependency issues. 
+
+I'm not sure how serious those dependency issues were because honestly I didn't spend much time troubleshooting. I talked myself into Colab by recalling some youtube videos I've watched where people have done much more complicated things than what I attempted here using colab, so I felt reasonably confident it would do what I needed. I also thought that since I'll be losing access to the discovery cluster after this course, maybe it would be pragmatic to learn a tool I can keep using. Now on the other side of things, I do kind of wish I had worked through the dependency issues. I just was a bit intimidated by an unfamiliar environment. 
 
 # Disentangled VAE [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/YannDubs/disentangling-vae/blob/master/LICENSE) [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
