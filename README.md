@@ -1,7 +1,7 @@
 # Disentagled VAE -- Jake's Colab .ipynb Implementation
 
 This is a fork of YannDubs/disentangling-vae--great repo, 10/10 would recommend. This fork really doesn't add much, I just wanted to **1)** 
-document my Colab implementation that as of 6/15/23 works reasonably well (though I did pay for $10/month colab) and **2)** 
+document my Colab implementation that as of 6/15/23 works reasonably well (though I did pay for $10/month colab, not sure how it might do on the free tier) and **2)** 
 document my own results from training the model on the CelebA dataset, and spending some time with the paper Disentangling B-VAE (https://arxiv.org/abs/1804.03599).
 
 # Colab Quickstart
@@ -14,7 +14,7 @@ Either go to this link (https://colab.research.google.com/drive/10c68VNn7E673TKL
 
 Follow instructions in notebook! 
 
-Basically I have it set up so you can just name a folder where the results will save, set your parameters (following instructions from original repo), and then run it (I've been setting it up to run overnight, depending on your dataset it can take a stupid long time (and I paid for $10 Colab, might work without?)).
+Basically I have it set up so you can just name a folder where the results will save, set your hyper-parameters (following instructions from original repo), and then run it. If runtime stays uninterrupted (can be a little dicey with colab) your results will save automatically to your google drive. 
 
 # My Findings
 
@@ -56,15 +56,6 @@ Naively one might think that more open channels would mean more information coul
 The equation determining encoding has a reconstruction term and a penalty term. Here I believe we are seeing the penalty term "put its foot down" and not allowing channels to encode information that would result in an increase in the KL divergence to a magnitiude that offsets the benefit to the reconstruction term.  
 
 
-### Did you just go from 150 Epochs to 30? 
-
-The careful reader may have noticed that the third experiment I just showed had 20% the training time of the previous two. 
-
-<img src="Colab_Implementation_Files/figs/June15_run_loss.png" width=350>
-
-As I hopefully mentioned, this is my first time doing something like this, and I really didn't know where to begin for setting hyperparameters. The above graph shows average loss over total training time, and after seeing it laid out like this I started doing shorter trainings since my ambition here is to build intuition and explore rather than robustly prove anything. 
-
-
 ##  Reconstruction: Not great, but insights/intuition in how it executed
 
 <img src="Colab_Implementation_Files/figs/reconstruct.png" width=550>
@@ -84,7 +75,7 @@ Also of note:
 
 <img src="Colab_Implementation_Files/figs/paper_fig2.png" width=550>
 
-Figure 2 from "Understanding Disentangling in B-VAE" illustrates how a higher beta value leads to a less entangled latent space. They mention in the paper that when the beta value is high, a potential drawback is loss of reconstruction fidelity, but we don't see that in figure 2 because two latent information channels are sufficient to reproduce the Gaussian blobs.
+Figure 2 from "Understanding Disentangling in B-VAE" (reproduced above) illustrates how a higher beta value leads to a less entangled latent space. They mention in the paper that when the beta value is high, a potential drawback is loss of reconstruction fidelity, but we don't see that in figure 2 because two latent information channels are sufficient to reproduce the Gaussian blobs.
 
 <div style="display: flex;">
     <img src="Colab_Implementation_Files/figs/reconstruct_b1.png" width="400">
@@ -112,6 +103,13 @@ Beta = 150
 
 With Beta=150 heavily penalizing the regularization term, only three channels are in use, and they are factorized. Reconstruction fidelity, however, has taken a pretty significant hit.
 
+## It is hard to know how long to train for ( # of epochs specifically, but all hyperparameters really) 
+
+The careful reader may have noticed that in the experiments I show the # of epochs varies quite widely. 
+
+<img src="Colab_Implementation_Files/figs/June15_run_loss.png" width=350>
+
+This is my first time doing something like this, and I really didn't know where to begin for setting hyperparameters. The above graph shows average loss over total training time for a run with 150 epochs, and after seeing it laid out like this I started doing shorter trainings since my ambition here is to build intuition and explore rather than robustly prove anything. Since 150 epoch runs were taking in the ballpark of 6 hours to complete, I wish I had made this graph earlier! 
 
 
 
