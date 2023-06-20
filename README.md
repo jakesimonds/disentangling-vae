@@ -68,7 +68,7 @@ The reconstruction does an okay job on some of those elements, while the faces t
 
 Also of note: 
 - it seems to reconstruct more poorly on non-white faces, likely an artifact of the dataset population
-- Things like hats or glasses are often missing. It would be very cool to tease out latent dimensions for items like those, and I think theoretically it's possible, but it might be hard with a dataset like celebA where there's just a lot of unpredictable variables.
+- Things like hats or glasses are often missing(see Ryan Braun, second row, second from the left, reconstructed with decent scale, background color & pose but no hat & a pretty generic face). It would be very cool to tease out latent dimensions for items like those, and I think theoretically it's possible. But to get to that level of granularity, though, you'd probably need to go with a different approach in both data and framework. The CelebA dataset might not be ideal because you've just got a lot of variation in the images that will "count for more" in reconstruction fidelity than something like a hat-vs-no-hat or glasses-vs-no-glasses. And the algorithm would probably also take a heck of a lot of fine tuning to both open up but then also make factorized use of the more latent channels you'd need to start getting to some of those more granular things. 
 
 
 ## Recreating Figure 2 from "Understanding Disentanglement in B-VAE" with Celeba dataset
